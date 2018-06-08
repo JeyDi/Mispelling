@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Introduction}{3}{section.1}
+\contentsline {section}{\numberline {2}The model}{3}{section.2}
+\contentsline {subsection}{\numberline {2.1}Model Parameters}{3}{subsection.2.1}
+\contentsline {subsection}{\numberline {2.2}Prior probability matrix}{4}{subsection.2.2}
+\contentsline {subsection}{\numberline {2.3}Transition matrix}{4}{subsection.2.3}
+\contentsline {subsection}{\numberline {2.4}Emission matrix}{4}{subsection.2.4}
+\contentsline {subsection}{\numberline {2.5}Training}{5}{subsection.2.5}
+\contentsline {subsection}{\numberline {2.6}Dictionary}{6}{subsection.2.6}
+\contentsline {section}{\numberline {3}Tools and libraries}{7}{section.3}
+\contentsline {section}{\numberline {4}Test and results}{7}{section.4}
+\contentsline {subsection}{\numberline {4.1}Data Analysis}{7}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}Performance measure}{9}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Performance evaluation}{9}{subsection.4.3}
+\contentsline {subsection}{\numberline {4.4}Word prediction analysis}{13}{subsection.4.4}
+\contentsline {section}{\numberline {5}HMMispelling demo}{15}{section.5}
+\contentsline {section}{\numberline {6}Conclusions}{15}{section.6}
