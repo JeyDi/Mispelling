@@ -1,0 +1,6 @@
+tweepy
+nltk
+pandas
+numpy
+hidden_markov
+msgpack
