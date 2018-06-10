@@ -4,6 +4,7 @@ import os
 import string
 import nltk
 from nltk.tokenize import word_tokenize
+from configparser import ConfigParser
 
 #IF it's your first time with NLTK, need to run this and install packages
 #import nltk
@@ -15,6 +16,13 @@ URL = re.compile(r'htt[^\s]*')
 SYMBOLS = re.compile(r'[^A-Za-z ]')
 RT = re.compile(r'RT ')
 SPACE = re.compile(r'\s+')
+
+
+config = ConfigParser()
+config.read('../config.ini')
+
+#result folder with the downloaded tweets
+result_folder = config['config']['result_folder']
 
 #Load the file and launch the preprocessing
 def loadFile(inputfile):
@@ -86,9 +94,9 @@ def preprocessing(profile):
     
     print("Start preprocessing")
 
-    result_folder = "../.."
+   
 
-    input_file = result_folder + "/tweet_librarytweet_" + profile + ".txt"
+    input_file = os.path.join(result_folder, "tweet_librarytweet_%s.txt" % profile)
 
     text = loadFile(input_file)
 
@@ -97,7 +105,7 @@ def preprocessing(profile):
     #result_text2 = cleanTweetsNLTK(text)
 
     #write the outfile
-    outfile = result_folder + "/tweet_result" + profile
+    outfile = os.path.join(result_folder, "tweet_result_%s" % profile)
     file_type = "txt"
     writeFile(outfile,result_text,file_type)
     

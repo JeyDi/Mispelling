@@ -34,7 +34,7 @@ def import_dataframe(file, func=normalize_matrix):
 #Copied...don't know what is it
 def create_emission_matrix(errors_distributions):
     size = len(errors_distributions)
-
+    epsilon=''
     emission_matrix = np.full((size, size), epsilon, dtype=float)
     key_list = []
     keys_list = list(errors_distributions.keys())

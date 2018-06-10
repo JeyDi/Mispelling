@@ -1,6 +1,5 @@
-from Model import HMMspelling as HMM
 import numpy as np
-
+import model
 ############### Testing Mispelling HMM model ####################
 
 # List of possible states
@@ -31,11 +30,11 @@ transition_probability = np.matrix('0.1 0.3 0.2 0.4 ; 0.8 0.05 0.05 0.1 ; 0.1 0.
 observation_probability = np.matrix('0.1 0.3 0.2 0.1 0.3 ; 0.8 0.05 0.05 0.05 0.05 ; 0.1 0.3 0.1 0.4 0.1 ; 0.1 0.5 0.2 0.1 0.1 ')
 
 # Build the HMM for mispelling check
-test = HMM.HMMspelling(states,
-                       possible_observations,
-                       start_probability,
-                       transition_probability,
-                       observation_probability)
+test = model.HMM(states,
+    possible_observations,
+    start_probability,
+    transition_probability,
+    observation_probability)
 
 # Forward algorithm
 print("")
