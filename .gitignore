@@ -5,6 +5,7 @@
 .vscode/launch.json
 .vscode/extensions.json
 Code_hdi_settings.json
+*.ini
 
 
 #-----PYTHON-----
