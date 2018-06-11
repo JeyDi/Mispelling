@@ -18,6 +18,11 @@ consumer_secret = config['twitter']['consumer_secret']
 access_token = config['twitter']['access_token']
 access_token_secret = config['twitter']['access_token_secret']
 
+print("\nconsumer_key: " + consumer_key)
+print("consumer_secret: " + consumer_secret)
+print("access_token: " + access_token)
+print("access_token_secret: " + access_token_secret + "\n")
+
 # OAuth process, using the keys and tokens
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
@@ -26,6 +31,7 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth)
 
 def downloadTweets(profiles,result_folder):
+
     #Download the tweets and save into files
     for index, _item in enumerate(profiles):
         screen_name = "@%s" % profiles[index]

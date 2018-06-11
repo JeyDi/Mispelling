@@ -14,6 +14,7 @@ config.read('../config.ini')
 
 #result folder with the downloaded tweets
 result_folder = config['config']['result_folder']
+print(result_folder)
 
 #tweeter profile from where you want to download data
 profiles = ["realDonaldTrump","rogerfederer","MercedesAMG"]

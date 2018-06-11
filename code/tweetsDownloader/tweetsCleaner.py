@@ -94,9 +94,7 @@ def preprocessing(profile):
     
     print("Start preprocessing")
 
-   
-
-    input_file = os.path.join(result_folder, "tweet_librarytweet_%s.txt" % profile)
+    input_file = os.path.join(result_folder, "tweet_%s.txt" % profile)
 
     text = loadFile(input_file)
 
