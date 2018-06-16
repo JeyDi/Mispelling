@@ -12,7 +12,8 @@ os.chdir(dname)
 def train(input_tweet_path,input_frequency_path):
 
     #Load using the letters frequency
-    states, transition = utility.import_dataframe(input_frequency_path)
+    # states, transition = utility.import_dataframe(input_frequency_path)
+    return 0
 
 
 
