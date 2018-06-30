@@ -26,7 +26,7 @@ transition_matrix.letters_ngams(fileList, outFile, n)
 #TODO: Need to normalize the output file
 normalizeMatrix = normalize_matrix.import_dataframe_normalize(outFile)
 print(normalizeMatrix)
-#TODO: Save the matrix normalized
+#TODO: Save the matrix normalize6d
 
 #TODO: Create emission matrix
 
