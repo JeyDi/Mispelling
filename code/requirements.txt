@@ -5,3 +5,4 @@ numpy
 hidden_markov
 msgpack
 configparser
+sklearn

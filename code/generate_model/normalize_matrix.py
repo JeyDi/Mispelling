@@ -2,6 +2,8 @@
 import numpy as np
 import pandas as pd
 
+import sklearn.preprocessing as skpre
+
 #### FUNCTIONS TO NORMALIZE MATRIX (Stochastic matrix of characters Markov Chain )
 
 #Normalize a list of a matrix
@@ -18,14 +20,30 @@ def normalize_matrix(matrix):
     return result
 
 #Load a dataframe (with Pandas) and apply a normalization
-def import_dataframe_normalize(file, func=normalize_matrix):
+def normalize_dataframe(dataframe, func):
 
+    matrix = np.matrix(dataframe.values)
+    header = dataframe.columns.values.tolist()
+
+    if func==0:
+        matrix = func(matrix)
+    elif func==1:
+        normed_matrix = skpre.normalize(matrix, axis=1, norm='l1')
+        matrix = normed_matrix
+
+    return header, matrix
+
+#Load a csv dataframe and apply a normalization
+def normalize_dataframe_csv(file,func):
     dataframe = pd.read_csv(file)
     dataframe = dataframe.drop(dataframe.columns[0], 1)
     matrix = np.matrix(dataframe.as_matrix())
     header = dataframe.columns.values.tolist()
 
-    if func:
+    if func==0:
         matrix = func(matrix)
+    elif func==1:
+        normed_matrix = skpre.normalize(matrix, axis=1, norm='l1')
+        matrix = normed_matrix
 
     return header, matrix

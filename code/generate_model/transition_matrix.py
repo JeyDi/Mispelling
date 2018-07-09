@@ -3,9 +3,12 @@ import numpy as np
 import pandas as pd
 import math as mh
 import logging
+import json
 import re
 from nltk.util import ngrams
 from collections import Counter
+
+layout_file = 'resources/qwerty_simple.json'
 
 
 ######## CREATE TRANSITION MATRIX FROM BAG OF WORDS
@@ -30,30 +33,76 @@ def split_text_chars(text):
 
 spaces_re = re.compile(r"\s+|\r\n|\r|\n|\t+")
 
+# Function to add columns and rows for letters not met in training
+def complete_matrix(frequencies, dict):
+
+    # Get letters already met
+    rows = list(frequencies.index)
+
+    # For each letter in the dictionary check if met already met
+    for key in dict:
+        found = False
+        for row in rows:
+            if (key == row):
+                found = True
+                break
+
+        # If not found add a 1-row and 1-column with the letter as key
+        if (not(found)):
+            frequencies[key] = 1
+            frequencies.loc[key] = [1 for x in range(0, frequencies.shape[1])]
+
+    # Sort the DF by rows
+    sorted_rows = frequencies.sort_index(axis=0)
+    # Sort the DF by columns
+    sorted = sorted_rows.sort_index(axis=1)
+
+    return sorted
+
+
 ###MAIN FUNCTIONS TO CREATE TRANSITION LETTERS NGRAM MATRIX
-def letters_ngams(files, out_file, n=2):
+def create_transition_matrix(file, out_file=None, n=2):
     chars_count = Counter()
 
-    for file in files:
-        with open(file, "rt", encoding="utf8") as inf:
-            text = " ".join(inf.readlines())
-            #Clear \n characters
-            text = spaces_re.sub(" ", text)
-            #Split text in char
-            chars = split_text_chars(text)
-            logging.info("Splitted chars")
-            #Split with ngrams the text into subarray with dimension = n
-            chars_ngram = ngrams(chars, n)
-            chars_ngram = [(x, y) for x, y in chars_ngram if not x == y == " "]
-            logging.info("Computed n-grams")
-            #Start counting
-            chars_count.update(chars_ngram)
-            logging.info("Counted n-grams")
+    with open(file, "rt", encoding="utf8") as inf:
+        text = " ".join(inf.readlines())
+
+        #Clear \n characters
+        text = spaces_re.sub(" ", text)
+
+        #Split text in char
+        chars = split_text_chars(text)
+        logging.info("Splitted chars")
+
+        #Split with ngrams the text into subarray with dimension = n
+        chars_ngram = ngrams(chars, n)
+        chars_ngram = [(x, y) for x, y in chars_ngram if not x == y == " "]
+        logging.info("Computed n-grams")
+            
+        #Start counting
+        chars_count.update(chars_ngram)
+        logging.info("Counted n-grams")
 
     header, matrix_count = count2matrix(chars_count)
 
     frequencies = pd.DataFrame(matrix_count, columns=header, index=header)
-    frequencies.to_csv(path_or_buf=out_file, encoding="utf8")
+
+    #Read the json file
+    with open(layout_file) as data_file:    
+        layout_json = json.load(data_file)
+
+    number_of_key_in_dict = 0
+
+    for key in layout_json:
+        number_of_key_in_dict =+ 1    
+
+    if(number_of_key_in_dict != frequencies.shape[0]):
+        frequencies = complete_matrix(frequencies, layout_json)
+
+    if (not(out_file == None)):
+        frequencies.to_csv(out_file, sep=";", encoding="utf-8")
+
+    return frequencies
 
 
 #Count the elements in the array of character
@@ -88,4 +137,6 @@ def count2matrix(chars_counter):
         # filling up the matrix with weights                                                
         matrix[i, j] = value
 
+    #header = Hidden states
+    #matrix = transaction matrix
     return header, matrix

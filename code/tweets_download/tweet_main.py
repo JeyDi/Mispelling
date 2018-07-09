@@ -1,5 +1,5 @@
-import tweetsDownloader
-import tweetsCleaner
+from tweets_download import tweets_downloader
+from tweets_download import tweets_cleaner
 import os
 from configparser import ConfigParser
 
@@ -19,10 +19,10 @@ print(result_folder)
 #tweeter profile from where you want to download data
 profiles = ["realDonaldTrump","rogerfederer","MercedesAMG"]
 
-tweetsDownloader.downloadTweets(profiles,result_folder)
+tweets_downloader.downloadTweets(profiles,result_folder)
 
 for profile in profiles:
     #textFileIn = tweetsCleaner2.loadFile(result_folder + "/tweet_" + profile + ".txt")
     #textFileClean = tweetsCleaner2.cleanTweets(textFileIn)
-    tweetsCleaner.preprocessing(profile)
+    tweets_cleaner.preprocessing(profile)
 
