@@ -65,3 +65,95 @@ def generate_model_with_input(states, observation, start_prob, transition, emiss
     model = hidden_markov.hmm(states,observation,start_prob,transition,emission)
 
     return model
+
+
+# Build a merged dictionary from input file and returns the path to it
+def compute_dictionary(input_dicts):
+
+    path_to_dictionaries = "../tweet_library/"
+    path_to_final_dictionary = "../dictionaries/"
+
+    # mkdir to dictionary if not exists
+    if(not(os.path.exists(path_to_final_dictionary))):
+        os.makedirs(path_to_final_dictionary)
+
+    # build path to merged dictionary
+    for dict in input_dicts:
+        path_to_final_dictionary += dict
+    
+    path_to_final_dictionary += ".txt"
+
+    # remove if already existing
+    try:
+        os.remove(path_to_final_dictionary)
+    except OSError:
+        pass
+
+    # concatenate input_dicts in the final dictionary
+    with open(path_to_final_dictionary, "a", encoding="utf8") as output_dict:
+
+        for dict in input_dicts:
+            dict_path = path_to_dictionaries + dict + ".txt"
+
+            with open(dict_path, "rt", encoding="utf-8") as input_dict:
+
+                if(not(os.path.exists(dict_path))):
+                    print("Dizionario non presente!")
+
+                output_dict.write(input_dict.read())
+    
+    return path_to_final_dictionary
+
+
+# Launch the model creation with a custom user message
+def generate_model_from_dictionary(input_dicts,input_layout,message):
+    
+    # Build the dictionary name
+    input_dict_name = "".join(input_dicts)
+
+    print(message)
+
+    #Build a merged dictionary to train the model
+    input_dict_path = compute_dictionary(input_dicts)
+
+    #Train the model
+    model, states, observation, start_prob, transition, emission = generate_model(
+            input_dict_path,input_layout)
+            
+    # Output the model
+    io_model.save_model(input_dict_name, states, observation, start_prob, transition, emission)
+
+    return model
+
+#############################################################################
+##################### MAIN MODEL CREATION FUNCTION ##########################
+
+def create_model(input_dict,input_layout,force_model_computing = False):
+    
+    # Build the dictionary name
+    input_dict_name = "".join(input_dict)
+    
+    if not force_model_computing:
+    # Check if the model already exists
+        if io_model.check_model(input_dict_name):
+
+            print("Model already existing, retrieving the elements...")
+
+            # Import model elements
+            states, observation, start_prob, transition, emission = io_model.import_model(
+                input_dict_name)
+
+            # Rebuild the model
+            model = generate_model_with_input(
+                states, observation, start_prob, transition, emission)
+
+            print("Model restored!")
+
+        else:
+            message = "Model not existing, ready to compute it!"
+            model = generate_model_from_dictionary(input_dict,input_layout,message)
+    else:
+        message = "Force recomputing enable, computing the model..."
+        model = generate_model_from_dictionary(input_dict,input_layout,message)
+
+    return model

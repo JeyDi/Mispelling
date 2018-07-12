@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>411</width>
+    <height>381</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>HMM Mispelling</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTextEdit" name="input"/>
+    </item>
+    <item>
+     <widget class="QPushButton" name="push">
+      <property name="text">
+       <string>Try correction</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextEdit" name="output"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>411</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>input</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>input_word()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>101</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>push</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>push_correction()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>190</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>output</sender>
+   <signal>textChanged()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>predicted_word()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>205</x>
+     <y>279</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>205</x>
+     <y>190</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>input_word()</slot>
+  <slot>predicted_word()</slot>
+  <slot>push_correction()</slot>
+ </slots>
+</ui>

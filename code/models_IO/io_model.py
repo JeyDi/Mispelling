@@ -3,6 +3,7 @@ import os
 import csv
 import pandas as pd
 
+#TODO: this directory in the config ini
 main_directory = "../saved_models/"
 
 # Export a model in a serie of CSV file
