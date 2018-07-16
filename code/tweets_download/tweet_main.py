@@ -1,6 +1,6 @@
-from tweets_download import tweets_downloader
-from tweets_download import tweets_cleaner
 import os
+from tweets_download import tweets_cleaner
+from tweets_download import tweets_downloader
 from configparser import ConfigParser
 
 #Check the working directory, go inside the file wd and launch
@@ -10,19 +10,15 @@ dname = os.path.dirname(abspath)
 os.chdir(dname)
 
 config = ConfigParser()
-config.read('../config.ini')
+config.read('config.ini')
 
 #result folder with the downloaded tweets
-result_folder = config['config']['result_folder']
-print(result_folder)
+result_folder = config['config']['raw_tweets_folder']
 
 #tweeter profile from where you want to download data
-profiles = ["realDonaldTrump","rogerfederer","MercedesAMG"]
+profiles = ["realDonaldTrump","rogerfederer","MercedesAMG","Forbes"]
 
 tweets_downloader.downloadTweets(profiles,result_folder)
 
 for profile in profiles:
-    #textFileIn = tweetsCleaner2.loadFile(result_folder + "/tweet_" + profile + ".txt")
-    #textFileClean = tweetsCleaner2.cleanTweets(textFileIn)
     tweets_cleaner.preprocessing(profile)
-

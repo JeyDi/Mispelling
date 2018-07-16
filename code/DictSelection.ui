@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SelectDictionary</class>
+ <widget class="QDialog" name="SelectDictionary">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>248</width>
+    <height>226</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>201</width>
+     <height>131</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Account</string>
+   </property>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>104</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QCheckBox" name="checkBox_MercedesAMG">
+     <property name="text">
+      <string>MercedesAMG</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_rogerfederer">
+     <property name="text">
+      <string>rogerfederer</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_realDonaldTrump">
+     <property name="text">
+      <string>realDonaldTrump</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkBox_Forbes">
+     <property name="text">
+      <string>Forbes</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>180</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectDictionary</receiver>
+   <slot>close()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>190</x>
+     <y>194</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>247</x>
+     <y>225</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_MercedesAMG</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectDictionary</receiver>
+   <slot>setMercedesAMG()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>106</x>
+     <y>60</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>234</x>
+     <y>56</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_rogerfederer</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectDictionary</receiver>
+   <slot>setrogerfederer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>93</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>84</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_realDonaldTrump</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectDictionary</receiver>
+   <slot>setrealDonaldTrump()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>108</x>
+     <y>105</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>237</x>
+     <y>112</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>checkBox_Forbes</sender>
+   <signal>clicked()</signal>
+   <receiver>SelectDictionary</receiver>
+   <slot>setForbes()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>103</x>
+     <y>134</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>239</x>
+     <y>141</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>setMercedesAMG()</slot>
+  <slot>setrogerfederer()</slot>
+  <slot>setrealDonaldTrump()</slot>
+  <slot>setForbes()</slot>
+ </slots>
+</ui>

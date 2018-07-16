@@ -17,14 +17,14 @@ SYMBOLS = re.compile(r'[^A-Za-z ]')
 RT = re.compile(r'RT ')
 SPACE = re.compile(r'\s+')
 
-
 config = ConfigParser()
 config.read('../config.ini')
 
 #result folder with the downloaded tweets
-result_folder = config['config']['result_folder']
+input_folder = config['config']['raw_tweets_folder']
+output_folder = config['config']['cleaned_tweets_folder']
 
-#Load the file and launch the preprocessing
+#Load the file
 def loadFile(inputfile):
     
     text = ""
@@ -37,7 +37,6 @@ def loadFile(inputfile):
         print("File not found, please insert a valid one")
 
     return(text)
-
 
 #TODO: need to implement a csv and a txt outfile
 def writeFile(outfile,text,file_type):
@@ -94,7 +93,7 @@ def preprocessing(profile):
     
     print("Start preprocessing")
 
-    input_file = os.path.join(result_folder, "tweet_%s.txt" % profile)
+    input_file = os.path.join(input_folder, "raw_%s.txt" % profile)
 
     text = loadFile(input_file)
 
@@ -103,15 +102,8 @@ def preprocessing(profile):
     #result_text2 = cleanTweetsNLTK(text)
 
     #write the outfile
-    outfile = os.path.join(result_folder, "tweet_result_%s" % profile)
+    outfile = os.path.join(output_folder, "clean_%s" % profile)
     file_type = "txt"
     writeFile(outfile,result_text,file_type)
     
-    #outfile2 = result_folder + "/tweet_result" + profile + "NLTK"
-    #file_type = "txt"
-    #writeFile(outfile2,result_text2,file_type)
-
     print("Finish preprocessing tweets")
-
-
-

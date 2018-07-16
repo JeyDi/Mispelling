@@ -16,17 +16,14 @@ config.read('../config.ini')
 # # Set to true for recomputing the model even if it exists
 # force_model_computing = False
 
-# Name of qwerty layout Json
-input_layout = 'qwerty_simple'
-
 input_dicts = []
 # Choose the dicts to append as input
-input_dicts.append('tweet_result_MercedesAMG')
-input_dicts.append('tweet_result_rogerfederer')
-input_dicts.append('tweet_result_realDonaldTrump')
+input_dicts.append('clean_MercedesAMG')
+input_dicts.append('clean_rogerfederer')
+input_dicts.append('clean_realDonaldTrump')
 
 #Create the model
-model = create_model.create_model(input_dicts,input_layout)
+model = create_model.create_model(input_dicts)
 
 #Check the input with viterbi
 viterbi_compute.viterbi_check(model)

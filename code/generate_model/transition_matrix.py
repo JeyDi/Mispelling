@@ -7,9 +7,12 @@ import json
 import re
 from nltk.util import ngrams
 from collections import Counter
+from configparser import ConfigParser
 
-layout_file = 'resources/qwerty_simple.json'
+config = ConfigParser()
+config.read('./Code/config.ini')
 
+layout_file = config['config']['layout_file']
 
 ######## CREATE TRANSITION MATRIX FROM BAG OF WORDS
 

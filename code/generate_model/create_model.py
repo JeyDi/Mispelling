@@ -9,14 +9,13 @@ from generate_model import model
 from models_IO import io_model
 import hidden_markov
 
-# Compute elements of model and create HMM
-def generate_model(input_dict, input_layout):
+config = ConfigParser()
+config.read('../config.ini')
 
-    resource_path = './resources/'
-    layout_file = resource_path + input_layout + '.json'
-    
-    #transition_out_file = library_path + 'model/transition/' +  input_dict + '.csv'
-    #emission_out_file = library_path + 'model/emission/' + input_dict + '.csv'
+# Compute elements of model and create HMM
+def generate_model(input_dict):
+
+    layout_file = config['config']['layout_file']
 
     print("Generating Transition Matrix...")
     transitionMatrix = transition_matrix.create_transition_matrix(input_dict)
@@ -70,8 +69,8 @@ def generate_model_with_input(states, observation, start_prob, transition, emiss
 # Build a merged dictionary from input file and returns the path to it
 def compute_dictionary(input_dicts):
 
-    path_to_dictionaries = "../tweet_library/"
-    path_to_final_dictionary = "../dictionaries/"
+    path_to_dictionaries = config['config']['input_tweets_folder']
+    path_to_final_dictionary = config['config']['dictionaries_folder']
 
     # mkdir to dictionary if not exists
     if(not(os.path.exists(path_to_final_dictionary))):
@@ -106,7 +105,7 @@ def compute_dictionary(input_dicts):
 
 
 # Launch the model creation with a custom user message
-def generate_model_from_dictionary(input_dicts,input_layout,message):
+def generate_model_from_dictionary(input_dicts, message):
     
     # Build the dictionary name
     input_dict_name = "".join(input_dicts)
@@ -118,7 +117,7 @@ def generate_model_from_dictionary(input_dicts,input_layout,message):
 
     #Train the model
     model, states, observation, start_prob, transition, emission = generate_model(
-            input_dict_path,input_layout)
+            input_dict_path)
             
     # Output the model
     io_model.save_model(input_dict_name, states, observation, start_prob, transition, emission)
@@ -128,7 +127,7 @@ def generate_model_from_dictionary(input_dicts,input_layout,message):
 #############################################################################
 ##################### MAIN MODEL CREATION FUNCTION ##########################
 
-def create_model(input_dict,input_layout,force_model_computing = False):
+def create_model(input_dict, force_model_computing = False):
     
     # Build the dictionary name
     input_dict_name = "".join(input_dict)
@@ -151,9 +150,9 @@ def create_model(input_dict,input_layout,force_model_computing = False):
 
         else:
             message = "Model not existing, ready to compute it!"
-            model = generate_model_from_dictionary(input_dict,input_layout,message)
+            model = generate_model_from_dictionary(input_dict, message)
     else:
         message = "Force recomputing enable, computing the model..."
-        model = generate_model_from_dictionary(input_dict,input_layout,message)
+        model = generate_model_from_dictionary(input_dict, message)
 
     return model

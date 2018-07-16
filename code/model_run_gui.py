@@ -1,5 +1,5 @@
 import os
-import utility
+# import utility
 from configparser import ConfigParser
 from models_IO import io_model
 from generate_model import create_model
@@ -10,27 +10,36 @@ abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 
-
-
 def launch_model_creation(message,input_dicts,input_layout,input_dict_name):
     
     print(message)
 
     #Build a merged dictionary to train the model
-    input_dict_path = utility.compute_dictionary(input_dicts)
+    input_dict_path = create_model.compute_dictionary(input_dicts)
 
     #Train the model
     model, states, observation, start_prob, transition, emission = create_model.generate_model(
-            input_dict_path,input_layout)
+            input_dict_path)
             
     # Output the model
     io_model.save_model(input_dict_name, states, observation, start_prob, transition, emission)
 
     return model
+    
+def existsModel(input_dicts):
+    config = ConfigParser()
+    config.read('../config.ini')
+
+    input_dict_name = "".join(input_dicts)
+
+    # Check if the model already exists
+    if io_model.check_model(input_dict_name):
+        return True
+    else:
+        return False
 
 
-
-def tryViterbi(inputString):
+def tryViterbi(inputString,input_dicts):
 
     config = ConfigParser()
     config.read('../config.ini')
@@ -41,12 +50,13 @@ def tryViterbi(inputString):
     # Name of qwerty layout Json
     input_layout = 'qwerty_simple'
 
-    input_dicts = []
-    # Choose the dicts to append as input
-    input_dicts.append('tweet_result_MercedesAMG')
-    input_dicts.append('tweet_result_rogerfederer')
-    input_dicts.append('tweet_result_realDonaldTrump')
-    #input_dicts.append('text_for_testing')
+    # input_dicts = []
+    # # Choose the dicts to append as input
+    # input_dicts.append('tweet_result_MercedesAMG')
+    # input_dicts.append('tweet_result_rogerfederer')
+    # input_dicts.append('tweet_result_realDonaldTrump')
+    # input_dicts.append('tweet_result_Forbes')
+    # #input_dicts.append('text_for_testing')
 
     # Build the dictionary name
     input_dict_name = "".join(input_dicts)

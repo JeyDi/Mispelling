@@ -39,7 +39,7 @@ def downloadTweets(profiles,result_folder):
         #Warning: if you put a number inside the items you can limit the max tweets download
         try:
             for status in tweepy.Cursor(api.user_timeline, screen_name=screen_name).items():
-                filename = os.path.join(result_folder, "tweet_%s.txt" % profiles[index])
+                filename = os.path.join(result_folder, "raw_%s.txt" % profiles[index])
                 with open(filename, 'a', encoding='utf8') as text_file:
                     text_file.write(status.text + "\n")
         except Exception as e:

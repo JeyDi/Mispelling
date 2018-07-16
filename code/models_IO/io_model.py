@@ -2,46 +2,58 @@ import numpy
 import os
 import csv
 import pandas as pd
+import shutil
+from configparser import ConfigParser
 
-#TODO: this directory in the config ini
-main_directory = "../saved_models/"
+config = ConfigParser()
+config.read('./Code/config.ini')
+
+# Folder with saved models
+main_directory = config['config']['io_model_folder']
 
 # Export a model in a serie of CSV file
 def save_model(dict, states, obs, start_prob, transition, emission):
 
     # Check if the directory for this dict already exists
-    directory = main_directory + dict
+    directory = os.path.join(main_directory, dict)
 
     # Eventually create it
     if not os.path.exists(directory):
         os.makedirs(directory)
 
-    file_raw_directory = directory + "/" + dict + "_"
+    try:
 
-    # Dump states to CSV
-    states_file = open(file_raw_directory + "states.csv", "w")
+        file_raw_directory = os.path.join(directory, dict + "_")
 
-    for state in states:
-        states_file.write(state + ";")
+        # Dump states to CSV
+        states_file = open(file_raw_directory + "states.csv", "w")
 
-    states_file.close()
+        for state in states:
+            states_file.write(state + ";")
 
-    # Dump observations to csv
-    obs_file = open(file_raw_directory + "obs.csv", "w")
+        states_file.close()
 
-    for ob in obs:
-        obs_file.write(ob + ";")
+        # Dump observations to csv
+        obs_file = open(file_raw_directory + "obs.csv", "w")
 
-    obs_file.close()
+        for ob in obs:
+            obs_file.write(ob + ";")
 
-    # Dump start probability to CSV
-    numpy.savetxt(file_raw_directory + "start_prob.csv", start_prob, delimiter=";")
+        obs_file.close()
 
-    # Dump transition matrix to CSV
-    transition.to_csv(file_raw_directory + "transition.csv", index=True, header=True, sep=';')
+        # Dump start probability to CSV
+        numpy.savetxt(file_raw_directory + "start_prob.csv", start_prob, delimiter=";")
 
-    # Dump emission matrix to CSV
-    emission.to_csv(file_raw_directory + "emission.csv", index=True, header=True, sep=';')
+        # Dump transition matrix to CSV
+        transition.to_csv(file_raw_directory + "transition.csv", index=True, header=True, sep=';')
+
+        # Dump emission matrix to CSV
+        emission.to_csv(file_raw_directory + "emission.csv", index=True, header=True, sep=';')
+
+    except OSError:
+        if os.path.exists(directory):
+            shutil.rmtree(directory, ignore_errors=True)
+            raise
 
 
 # Check if a model is have been already computed
@@ -52,7 +64,10 @@ def check_model(dict):
 # Import already computed model elemetns
 def import_model(dict):
 
-    raw_dir = main_directory + dict + "/" + dict + "_"
+    # Check if the directory for this dict already exists
+    directory = os.path.join(main_directory, dict)
+
+    raw_dir = os.path.join(directory, dict + "_")
 
     # Import start_prob
     file = open(raw_dir + 'start_prob.csv', 'r')
