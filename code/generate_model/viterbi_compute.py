@@ -59,9 +59,9 @@ def file_correction(model,input_file):
     print("File corrected")
  
     file_name, _ = path.splitext(path.basename(input_file))
-    export = export_result(file_name,result)
+    result_path = export_result(file_name,result)
  
-    return result
+    return result_path
  
 #Function to export the perturbation result into a file txt
 def export_result(filename,result):
@@ -79,7 +79,7 @@ def export_result(filename,result):
  
     print("File corrected with Viterbi saved and exported")
  
-    return 1
+    return result_path
  
 def clean(tweet):
     tweet = mentions_re.sub(' ', tweet)  # Mentions

@@ -15,7 +15,7 @@ from configparser import ConfigParser
 MENTIONS = re.compile(r'@[^\s]*')
 URL = re.compile(r'htt[^\s]*')
 SYMBOLS = re.compile(r'[^A-Za-z ]')
-RT = re.compile(r'RT ')s
+RT = re.compile(r'RT ')
 SPACE = re.compile(r'\s+')
  
  
