@@ -156,7 +156,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):  # codice da non guardare
         fileName, _filter = QtWidgets.QFileDialog.getOpenFileName(self,"QFileDialog.getOpenFileName()", "","All Files (*);;TXT files (*.txt)", options=options) 
         if fileName: 
             print(fileName) 
-            result = viterbi_compute.file_correction(self.model,fileName) 
+            result = viterbi_compute.file_correction(self.model,fileName)[0]
             self.plainTextEdit.clear() 
             self.plainTextEdit.append(''.join(result)) 
  
