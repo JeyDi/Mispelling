@@ -60,7 +60,7 @@ def save_model(dict, states, obs, start_prob, transition, emission):
  
 # Check if a model is have been already computed
 def check_model(dict):
-    return os.path.exists(main_directory + dict)
+    return os.path.exists(os.path.join(main_directory, dict))
  
  
 # Import already computed model elemetns

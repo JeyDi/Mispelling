@@ -48,7 +48,7 @@ def perturb_word(word,percentage):
     word = "".join(string_list) 
  
     return word 
- 
+  
  
 #Main function for the perturbation algorithm 
 def perturb(input_words,words_percentage=10,string_percentage=10): 
@@ -94,10 +94,11 @@ def word_perturbation(input_file = None, string = None, clean = 0, words_percent
     result_text = "" 
  
     #Start perturbation the file 
-    if(input_file is not None): 
+    if(input_file != None): 
         print("Reading the file") 
         with open (input_file, "r",encoding="utf-8") as file: 
             input_words = file.readline() 
+            file.close()
  
         #Clean the text and perturb the string 
         if(clean == 1): 
@@ -148,7 +149,8 @@ def export_result(filename,result):
     with open(result_path, "w") as text_file: 
         for i in result: 
             text_file.write("%s " % i) 
- 
+    text_file.close()
+
     print("File cleaned saved") 
  
     return result_path

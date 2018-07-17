@@ -26,16 +26,17 @@ input_dicts = []
 # input_dicts.append('clean_rogerfederer')
 input_dicts.append('clean_realDonaldTrump')
 
-input_layout = "qwerty:simple"
+input_layout = "qwerty_simple"
 
 #Compute the dictionary
-input_dicts = create_model.compute_dictionary(input_dicts)
+# input_dicts = create_model.compute_dictionary(input_dicts)
 
 #Create the model
 model = create_model.create_model(input_dicts,input_layout)
 
-
-
+input_dicts = "".join(input_dicts)
+input_path = "..\\tweets\\cleaned"
+cleaned_input_dicts = os.path.join(input_path,input_dicts+".txt")
 
 ##TODO: 2. PERTURB THE FILE
 
@@ -44,7 +45,7 @@ model = create_model.create_model(input_dicts,input_layout)
 # input_path = path.join(input_path,filename) 
 # print(input_path) 
  
-perturbation_path = perturbation.word_perturbation(input_file=input_dicts,string=None,clean=0,words_percentage=50,string_percentage=50) 
+perturbation_path = perturbation.word_perturbation(input_file=cleaned_input_dicts,string=None,clean=0,words_percentage=50,string_percentage=50) 
 
 
 ##TODO: 3. CORRECT THE FILE
@@ -58,4 +59,4 @@ correction_path = viterbi_compute.file_correction(model,perturbation_path)
 
 ##TODO: 4. EVALUATE THE FILE
 # dict_file = "../tweets/"
-evaluate.evaluate(input_dicts,perturbation_path,correction_path)
+evaluate.evaluate(cleaned_input_dicts,perturbation_path,correction_path)
