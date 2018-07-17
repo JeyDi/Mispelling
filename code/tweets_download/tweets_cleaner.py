@@ -1,30 +1,33 @@
 import csv
 import re
 import os
+import sys
 import string
 import nltk
 from nltk.tokenize import word_tokenize
 from configparser import ConfigParser
-
+ 
 #IF it's your first time with NLTK, need to run this and install packages
 #import nltk
 #nltk.download()
-
+ 
 #Some usefull regexp
 MENTIONS = re.compile(r'@[^\s]*')
 URL = re.compile(r'htt[^\s]*')
 SYMBOLS = re.compile(r'[^A-Za-z ]')
-RT = re.compile(r'RT ')
+RT = re.compile(r'RT ')s
 SPACE = re.compile(r'\s+')
-
+ 
+ 
+pathname = os.path.dirname(sys.argv[0])
 config = ConfigParser()
-config.read('../config.ini')
-
+config.read( pathname + '/config.ini')
+ 
 #result folder with the downloaded tweets
 input_folder = config['config']['raw_tweets_folder']
 output_folder = config['config']['cleaned_tweets_folder']
-
-#Load the file
+ 
+#Load the file and launch the preprocessing
 def loadFile(inputfile):
     
     text = ""
@@ -35,9 +38,10 @@ def loadFile(inputfile):
         file.close()
     except FileNotFoundError:
         print("File not found, please insert a valid one")
-
+ 
     return(text)
-
+ 
+ 
 #TODO: need to implement a csv and a txt outfile
 def writeFile(outfile,text,file_type):
     print("Final file generated")
@@ -58,10 +62,10 @@ def writeFile(outfile,text,file_type):
         print("No file extension valid")
     
     print("File successfully writed")
-
+ 
 #Standard preprocessing with regexp
 def cleanTweets(text):
-
+ 
     #Text preprocessing using the REGEXP
     text = MENTIONS.sub(' ', text)  # Mentions
     text = URL.sub(' ', text)  # URLs
@@ -69,10 +73,10 @@ def cleanTweets(text):
     text = RT.sub(' ', text)  # RT
     text = SPACE.sub(' ', text)
     final_text = text.strip()  # spaces at head or tail
-
+ 
     return(final_text)
-
-
+ 
+ 
 #Another way to do the preprocessing using nltk and some others library
 def cleanTweetsNLTK(text):
     
@@ -87,23 +91,28 @@ def cleanTweetsNLTK(text):
     words = [word for word in stripped if word.isalpha()]
     
     return(words)
-
-
+    
+    
 def preprocessing(profile):
     
     print("Start preprocessing")
-
-    input_file = os.path.join(input_folder, "raw_%s.txt" % profile)
-
+ 
+    input_file = os.path.join(input_folder, "tweet_%s.txt" % profile)
+ 
     text = loadFile(input_file)
-
+ 
     #call the text preprocessing
     result_text = cleanTweets(text)
     #result_text2 = cleanTweetsNLTK(text)
-
+ 
     #write the outfile
-    outfile = os.path.join(output_folder, "clean_%s" % profile)
+    outfile = os.path.join(output_folder, "tweet_result_%s" % profile)
     file_type = "txt"
     writeFile(outfile,result_text,file_type)
     
+    #outfile2 = result_folder + "/tweet_result" + profile + "NLTK"
+    #file_type = "txt"
+    #writeFile(outfile2,result_text2,file_type)
+ 
     print("Finish preprocessing tweets")
+ 

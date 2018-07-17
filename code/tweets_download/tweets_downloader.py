@@ -1,37 +1,39 @@
+ 
 import tweepy
 import re
 import os
+import sys
 from configparser import ConfigParser
-
+ 
 #Check the working directory, go inside the file wd and launch
 #TODO: when the solution istwitter, don't need this :)
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
-
-# Consumer keys and access tokens, used for OAuth
+ # Consumer keys and access tokens, used for OAuth
+pathname = os.path.dirname(sys.argv[0])
 config = ConfigParser()
-config.read('../config.ini')
-
+config.read( pathname + '/config.ini')
+ 
 consumer_key = config['twitter']['consumer_key']
 consumer_secret = config['twitter']['consumer_secret']
 access_token = config['twitter']['access_token']
 access_token_secret = config['twitter']['access_token_secret']
-
+ 
 print("\nconsumer_key: " + consumer_key)
 print("consumer_secret: " + consumer_secret)
 print("access_token: " + access_token)
 print("access_token_secret: " + access_token_secret + "\n")
-
+ 
 # OAuth process, using the keys and tokens
 auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_token_secret)
-
+ 
 # Creation of the actual interface, using authentication
 api = tweepy.API(auth)
-
+ 
 def downloadTweets(profiles,result_folder):
-
+ 
     #Download the tweets and save into files
     for index, _item in enumerate(profiles):
         screen_name = "@%s" % profiles[index]
@@ -39,7 +41,7 @@ def downloadTweets(profiles,result_folder):
         #Warning: if you put a number inside the items you can limit the max tweets download
         try:
             for status in tweepy.Cursor(api.user_timeline, screen_name=screen_name).items():
-                filename = os.path.join(result_folder, "raw_%s.txt" % profiles[index])
+                filename = os.path.join(result_folder, "tweet_%s.txt" % profiles[index])
                 with open(filename, 'a', encoding='utf8') as text_file:
                     text_file.write(status.text + "\n")
         except Exception as e:
