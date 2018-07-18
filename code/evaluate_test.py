@@ -35,7 +35,7 @@ input_layout = "qwerty_simple"
 model = create_model.create_model(input_dicts,input_layout)
 
 input_dicts = "".join(input_dicts)
-input_path = "..\\tweets\\cleaned"
+input_path = "../tweets/cleaned"
 cleaned_input_dicts = os.path.join(input_path,input_dicts+".txt")
 
 ##TODO: 2. PERTURB THE FILE
@@ -55,8 +55,8 @@ print("### START CORRECTING THE FILE ###")
 # perturbed_file_path = path.join(perturbed_file_path,filename)
 
 # ATTENTION: use this only if you want to calculate a new correction!!!!! otherwise use the path directly (more fast)!!!!
-# correction_path = viterbi_compute.file_correction(model,perturbation_path)[1]
-correction_path = "../tweets/corrected/clean_realDonaldTrump.txt"
+correction_path = viterbi_compute.file_correction(model,perturbation_path)[1]
+#correction_path = "../tweets/corrected/clean_realDonaldTrump.txt"
 
 
 ##TODO: 4. EVALUATE THE FILE
@@ -65,4 +65,10 @@ print("### START EVALUATING THE FILE ###")
 print("input: " + cleaned_input_dicts)
 print("perturbation: " + perturbation_path)
 print("correction: " + correction_path )
-evaluate.evaluate(cleaned_input_dicts,perturbation_path,correction_path)
+result=evaluate.evaluate(cleaned_input_dicts,perturbation_path,correction_path)
+print(result)
+print(evaluate.perturbed_corrected_ratio(result))
+print(evaluate.precision(result))
+print(evaluate.not_perturbed_not_corrected_ratio(result))
+print(evaluate.accuracy(result))
+print(evaluate.recall(result))

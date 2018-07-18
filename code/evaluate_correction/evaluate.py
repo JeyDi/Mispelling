@@ -20,42 +20,38 @@ def is_truth(truth, corrected):
 ##METRICS
 
 def perturbed_corrected_ratio(scores):
-    score111=0
-    score110=0
-    score100=0
-    for score in scores:
-        if(score[0]==1 and score[1]==1 and score[2]==1):
-            score111+=1
-        if(score[0]==1 and score[1]==1 and score[2]==0):
-            score110+=1
-        if(score[0]==1 and score[1]==0 and score[2]==0):
-            score100+=1
-    result = score111 / (score111 + score110 + score100)
-    # result = scores[(1, 1, 1)] / (scores[(1, 1, 1)] + scores[(1, 1, 0)] + scores[(1, 0, 0)])
+    try:
+        result = scores[(1, 1, 1)] / (scores[(1, 1, 1)] + scores[(1, 1, 0)] + scores[(1, 0, 0)])
+    except:
+        result = 0
     return result
 
 def not_perturbed_not_corrected_ratio(scores):
-    score001=0
-    score010=0
-    for score in scores:
-        if(score[0]==0 and score[1]==0 and score[2]==1):
-            score001+=1
-        if(score[0]==0 and score[1]==1 and score[2]==0):
-            score010+=1
-    result = score001 / (score001 + score010)
-    # result = scores[(0, 0, 1)] / (scores[(0, 0, 1)] + scores[(0, 1, 0)])
+    try:
+        result = scores[(0, 0, 1)] / (scores[(0, 0, 1)] + scores[(0, 1, 0)])
+    except:
+        result = 0
     return result
 
 def precision(scores):
-    result = scores[(1,1,1)] / (scores[(1,1,1)] + scores[(1,0,0)])
+    try:
+        result = scores[(1,1,1)] / (scores[(1,1,1)] + scores[(1,0,0)])
+    except:
+        result = 0
     return result
 
 def recall(scores):
-    result = scores[(1,1,1)] / (scores[1,1,1] + scores[(0,1,0)] + scores[(1,1,0)])
+    try:
+        result = scores[(1,1,1)] / (scores[1,1,1] + scores[(0,1,0)] + scores[(1,1,0)])
+    except:
+        result = 0
     return result
 
 def accuracy(scores):
-    result = ((scores[(1,1,1)]+scores[(0,0,1)])/(scores[(1,1,1)]+scores[(1,0,0)]+scores[(0,1,0)]+scores[(1,1,0)]+scores[(0,0,1)]))
+    try:
+        result = ((scores[(1,1,1)]+scores[(0,0,1)])/(scores[(1,1,1)]+scores[(1,0,0)]+scores[(0,1,0)]+scores[(1,1,0)]+scores[(0,0,1)]))
+    except:
+        result = 0
     return result
 
 def F1_measure(scores,precision,recall):
@@ -104,11 +100,6 @@ def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
                                                               corrected_words.split()):
             words_check += [check(start_single, perturbed_single, corrected_single)]
             words_evals[word_id] = words_check
-        
-    
-    pcr = perturbed_corrected_ratio(words_check)
-    npncr = not_perturbed_not_corrected_ratio(words_evals)
-
 
      # tweetio.write_tweets(path.join(out_path, correct_file_name + "_tweet_evaluation.txt"), tweets_evals)
     if(out_path is None):
