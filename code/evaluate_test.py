@@ -19,7 +19,7 @@ config = ConfigParser()
 config.read( pathname + '/config.ini')
 
 ##TODO: 1. CREATE THE MODEL
-
+print("### CREATE THE MODEL ###")
 input_dicts = []
 # Choose the dicts to append as input
 # input_dicts.append('clean_MercedesAMG')
@@ -39,24 +39,30 @@ input_path = "..\\tweets\\cleaned"
 cleaned_input_dicts = os.path.join(input_path,input_dicts+".txt")
 
 ##TODO: 2. PERTURB THE FILE
-
+print("### PERTURB THE FILE ###")
 # input_path = "../tweets/cleaned" 
 # filename = "clean_realDonaldTrump.txt" 
 # input_path = path.join(input_path,filename) 
 # print(input_path) 
  
-perturbation_path = perturbation.word_perturbation(input_file=cleaned_input_dicts,string=None,clean=0,words_percentage=50,string_percentage=50) 
+perturbation_path = perturbation.word_perturbation(input_file=cleaned_input_dicts,string=None,clean=0,words_percentage=10,string_percentage=10) 
 
 
 ##TODO: 3. CORRECT THE FILE
-
+print("### START CORRECTING THE FILE ###")
 #Check the input with viterbi
 # perturbed_file_path = "../tweets/perturbed"
 # perturbed_file_path = path.join(perturbed_file_path,filename)
-correction_path = viterbi_compute.file_correction(model,perturbation_path)
 
+# ATTENTION: use this only if you want to calculate a new correction!!!!! otherwise use the path directly (more fast)!!!!
+# correction_path = viterbi_compute.file_correction(model,perturbation_path)[1]
+correction_path = "../tweets/corrected/clean_realDonaldTrump.txt"
 
 
 ##TODO: 4. EVALUATE THE FILE
 # dict_file = "../tweets/"
+print("### START EVALUATING THE FILE ###")
+print("input: " + cleaned_input_dicts)
+print("perturbation: " + perturbation_path)
+print("correction: " + correction_path )
 evaluate.evaluate(cleaned_input_dicts,perturbation_path,correction_path)

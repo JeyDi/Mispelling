@@ -106,7 +106,7 @@ def compute_dictionary(input_dicts):
                     print("Dizionario non presente!")
  
                 output_dict.write(input_dict.read())
-    
+                
     return path_to_final_dictionary
  
  
@@ -137,7 +137,7 @@ def create_model(input_dict,input_layout,force_model_computing = False):
     
     # Build the dictionary name
     input_dict_name = "".join(input_dict)
-    print("##################### " + input_dict_name)
+    # print("##################### " + input_dict_name)
     if not force_model_computing:
     # Check if the model already exists
         if io_model.check_model(input_dict_name):
