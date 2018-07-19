@@ -4,16 +4,11 @@ import re
 import os
 import sys
 from configparser import ConfigParser
- 
-#Check the working directory, go inside the file wd and launch
-#TODO: when the solution istwitter, don't need this :)
-abspath = os.path.abspath(__file__)
-dname = os.path.dirname(abspath)
-os.chdir(dname)
- # Consumer keys and access tokens, used for OAuth
+
+# Consumer keys and access tokens, used for OAuth
 pathname = os.path.dirname(sys.argv[0])
 config = ConfigParser()
-config.read( pathname + '/config.ini')
+config.read( pathname + '/../config.ini')
  
 consumer_key = config['twitter']['consumer_key']
 consumer_secret = config['twitter']['consumer_secret']
@@ -41,7 +36,7 @@ def downloadTweets(profiles,result_folder):
         #Warning: if you put a number inside the items you can limit the max tweets download
         try:
             for status in tweepy.Cursor(api.user_timeline, screen_name=screen_name).items():
-                filename = os.path.join(result_folder, "tweet_%s.txt" % profiles[index])
+                filename = os.path.join(result_folder, "raw_%s.txt" % profiles[index])
                 with open(filename, 'a', encoding='utf8') as text_file:
                     text_file.write(status.text + "\n")
         except Exception as e:

@@ -117,7 +117,6 @@ def create_transition_matrix(file, out_file=None, n=2):
 def count2matrix(chars_counter):
     logging.info("Number of elements in counter: {}".format(len(chars_counter)))
     logging.info("Number of elements in counter.elements: {}".format(len(list(chars_counter.elements()))))
-    # unpacked_elements = sum(chars_counter.elements(), ())
  
     #Get all the elements in the counter
     unpacked_elements = [char for char, out in chars_counter.elements()]
@@ -146,6 +145,4 @@ def count2matrix(chars_counter):
         # filling up the matrix with weights                                                
         matrix[i, j] = value
  
-    #header = Hidden states
-    #matrix = transaction matrix
     return header, matrix

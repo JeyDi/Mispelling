@@ -16,7 +16,6 @@ from generate_model import model
 from generate_model import viterbi_compute 
 from configparser import ConfigParser 
  
- 
 class Ui_MainWindow(QtWidgets.QMainWindow):  # codice da non guardare 
     def setupUi(self, MainWindow): 
         MainWindow.setObjectName("MainWindow") 
@@ -100,8 +99,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):  # codice da non guardare
         self.menuBar.addAction(self.menuSettings.menuAction()) 
         self.menuBar.addAction(self.menuDatabases.menuAction()) 
  
-        ######### codice da guardare######## 
- 
         # menu bar actions preset 
         self.actionLive_Correction.setChecked(True) 
         self.actionForbes.setChecked(True) 
@@ -176,15 +173,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):  # codice da non guardare
             self.plainTextEdit.clear() 
             self.plainTextEdit.append(''.join(result)) 
  
- 
- 
     def load_dictionaries(self): 
         config = ConfigParser() 
         config.read('./code/config.ini') 
- 
-        # # Set to true for recomputing the model even if it exists 
-        # force_model_computing = False 
- 
+  
         # Name of qwerty layout Json 
         input_layout = 'qwerty_simple' 
  
@@ -201,12 +193,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):  # codice da non guardare
             print('clean_rogerfederer') 
         if(self.actionForbes.isChecked()): 
             input_dicts.append('clean_Forbes') 
-            print('clean_Frobes') 
+            print('clean_Forbes') 
  
         #Create the model 
         self.model = utility_gui.launch_model_creation(input_dicts,input_layout,'DizionarioDiProva') 
- 
- 
  
 if __name__ == "__main__": 
     # Path to this file 
@@ -220,4 +210,4 @@ if __name__ == "__main__":
     ui = Ui_MainWindow() 
     ui.setupUi(MainWindow) 
     MainWindow.show() 
-    sys.exit(app.exec_()) 
+    sys.exit(app.exec_())

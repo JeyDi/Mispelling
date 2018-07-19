@@ -32,8 +32,7 @@ def viterbi_check(model,repeat=True):
 def word_correction(model,word):
     result = model.viterbi(word)
     return result
- 
- 
+
  #File correction function to correct a txt file
 def file_correction(model,input_file):
     result = ""
@@ -50,11 +49,21 @@ def file_correction(model,input_file):
     text = text.split(" ")
  
     for i in text:
-        text_viterbi = ''.join(model.viterbi(i))
+        temp = model.viterbi(i)
+
+        #Substitute whitespace correction with original letter
+        for index, letter in enumerate(temp):
+            if letter == ' ':
+                temp[index] = i[index]
+
+        text_viterbi = ''.join(temp)
         result = result + text_viterbi + " "
  
     #Remove the first empty space
     result.strip()
+
+    #Remove the last empty space
+    result = result[:-1]
  
     print("File corrected")
  
@@ -65,15 +74,12 @@ def file_correction(model,input_file):
  
 #Function to export the perturbation result into a file txt
 def export_result(filename,result):
- 
- 
+
     result_path = config['config']['export_viterbi_folder']
     
     result_path = path.join(result_path,filename + ".txt")
  
     with open(result_path, "w") as text_file:
-        # for i in result:
-        #     text_file.write("%s " % i)
         text_file.write(result)
         text_file.close()
  
@@ -90,4 +96,3 @@ def clean(tweet):
     tweet = tweet.strip()  # spaces at head or tail
  
     return tweet
- 

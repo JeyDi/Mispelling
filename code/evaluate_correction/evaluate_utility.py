@@ -22,16 +22,7 @@ def load_file(path, cleaned = False):
 
         for tweet in reader:
             tweet_clean = clean(tweet) if cleaned else tweet
-            dict_tweets.append(tweet_clean)
-
-        # for tweet_id,tweet in enumerate(reader):
-        #     # tweet_id = reader.index(tweet)
-        #     tweet_clean = clean(tweet) if cleaned else tweet
-        #     if tweet_id == 55985:
-        #         print(tweet_clean)
-        #     if tweet_clean:
-        #         dict_tweets[tweet_id] = tweet_clean
-        
+            dict_tweets.append(tweet_clean)        
     return dict_tweets
 
 
@@ -40,8 +31,6 @@ def write_tweets(file, tweets):
         writer = csv.writer(out_file, delimiter="\t")
         for tweet_id in tweets:
             writer.writerow([tweet_id, tweets[tweet_id]])
-
-
 
 def clean(tweet):
     tweet = mentions_re.sub(' ', tweet)  # Mentions

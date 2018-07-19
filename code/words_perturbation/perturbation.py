@@ -37,14 +37,19 @@ def clean_text(text):
 def change_letter(letter, neighbours):
     
     none_count = 0
+    whitespace = False
+
     for letter in neighbours:
         if letter == None:
             none_count += 1
+        if letter == " ":
+            whitespace = True
 
     for i in range(0,none_count):
         neighbours.remove(None)
 
-    #neighbours.remove(letter)
+    if whitespace:
+        neighbours.remove(" ")
 
     return neighbours[randint(0,len(neighbours)-1)]
 
@@ -53,14 +58,14 @@ def perturb_word_qwerty(word,percentage):
 
     string_list = list(word) 
     string_count = len(string_list) 
-    string_to_perturb = int(math.floor(string_count*percentage/100)) 
+    string_to_perturb = int(math.ceil(string_count*percentage/100)) 
 
-    layout_file = config["config"]["layout_file"] #"../resources/qwerty_simple.json"
+    layout_file = config["config"]["layout_file"]
+    #layout_file = "../resources/qwerty_simple.json" Only for test purposes
 
     #Read the json file
     with open(layout_file) as data_file:    
         layout_json = json.load(data_file)
-
 
     for s in range(string_to_perturb): 
         string_index = randint(0,string_count-1) 
@@ -76,7 +81,7 @@ def perturb_word(word,percentage):
      
     string_list = list(word) 
     string_count = len(string_list) 
-    string_to_perturb = int(math.floor(string_count*percentage/100)) 
+    string_to_perturb = int(math.ceil(string_count*percentage/100)) 
  
     for s in range(string_to_perturb): 
         string_index = randint(0,string_count-1) 
@@ -91,7 +96,7 @@ def perturb_word(word,percentage):
 def perturb(input_words,words_percentage=10,string_percentage=10, qwerty_perturbation = True): 
     input_words_list = input_words.split(" ") 
     words_count = len(input_words_list) 
-    words_to_perturb = int(math.floor(words_count*words_percentage/100)) 
+    words_to_perturb = int(math.ceil(words_count*words_percentage/100)) 
  
     for i in range(words_to_perturb): 
         word_index = randint(0,words_count-1) 
@@ -158,33 +163,26 @@ def word_perturbation(input_file = None, string = None, clean = 0, words_percent
         print("\nERROR! Generate word perturbation error, please insert a string or a valid file\n") 
         return result_text 
  
-
- 
 #Function to export the perturbation result into a file txt 
 def export_result(filename,result): 
 
-    result_path = config["config"]["perturbed_tweets_folder"] #"..\\..\\tweets\\perturbed"
+    result_path = config["config"]["perturbed_tweets_folder"]
+    #result_path = "..\\..\\tweets\\perturbed" Only for test purposes
 
     result_path = path.join(result_path,filename + ".txt") 
  
     with open(result_path, "w") as text_file: 
-        for i in result: 
-            text_file.write("%s " % i) 
+        for index, i in enumerate(result):
+            if index == len(result)-1:
+                text_file.write("%s" % i)
+            else:
+                text_file.write("%s " % i) 
     text_file.close()
  
     return result_path
  
  
 # Functions test 
-
-#input_string = "ciao come stai proviamo a fare un test andrea guzzo che succede se aggiungo altre parole al ciclo uff" 
-#result = word_perturbation(string=input_string,clean=0,words_percentage=50,string_percentage=50) 
+#input_string = "ciao come stai proviamo a fare un test con andrea guzzo che succede se aggiungo altre parole al ciclo uff" 
+#result = word_perturbation(string=input_string,clean=0,words_percentage=10,string_percentage=10) 
 #print(result)
-# input_path = "..\\..\\tweets\\cleaned"
-# filename = "clean_realDonaldTrump.txt" 
-# input_path = path.join(input_path,filename) 
-# print(input_path) 
- 
-# word_perturbation(input_file=input_path,string=None,clean=0,words_percentage=50,string_percentage=50) 
- 
-# print("Finish..") 

@@ -23,39 +23,42 @@ def perturbed_corrected_ratio(scores):
     try:
         result = scores[(1, 1, 1)] / (scores[(1, 1, 1)] + scores[(1, 1, 0)] + scores[(1, 0, 0)])
     except:
-        result = 0
+        result = "perturbed corrected ratio error"
     return result
 
 def not_perturbed_not_corrected_ratio(scores):
     try:
         result = scores[(0, 0, 1)] / (scores[(0, 0, 1)] + scores[(0, 1, 0)])
     except:
-        result = 0
+        result = "not perturbed, not corrected ratio error"
     return result
 
 def precision(scores):
     try:
         result = scores[(1,1,1)] / (scores[(1,1,1)] + scores[(1,0,0)])
     except:
-        result = 0
+        result = "precision calculation error"
     return result
 
 def recall(scores):
     try:
         result = scores[(1,1,1)] / (scores[1,1,1] + scores[(0,1,0)] + scores[(1,1,0)])
     except:
-        result = 0
+        result = "recall error"
     return result
 
 def accuracy(scores):
     try:
         result = ((scores[(1,1,1)]+scores[(0,0,1)])/(scores[(1,1,1)]+scores[(1,0,0)]+scores[(0,1,0)]+scores[(1,1,0)]+scores[(0,0,1)]))
     except:
-        result = 0
+        result = "accuracy error"
     return result
 
 def F1_measure(scores,precision,recall):
-    result = 2*((precision*recall)/(precision+recall))
+    try:
+        result = 2*((precision*recall)/(precision+recall))
+    except:
+        result = "F1 measure error"
     return result
 
 def count_indexes(tweets_evals):
@@ -71,8 +74,6 @@ def count_indexes(tweets_evals):
 
     return indexes
 
-
-
 #Main function for evaluation
 def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
     tweets_evals = {}
@@ -83,7 +84,7 @@ def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
     start_tweets = evaluate_utility.load_file(dict_file)
     perturbed_tweets = evaluate_utility.load_file(perturbed_file)
     corrected_tweets = evaluate_utility.load_file(corrected_file)
-    
+
     for word_id in range(len(start_tweets)):
 
         start_words = start_tweets[word_id]
@@ -101,7 +102,6 @@ def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
             words_check += [check(start_single, perturbed_single, corrected_single)]
             words_evals[word_id] = words_check
 
-     # tweetio.write_tweets(path.join(out_path, correct_file_name + "_tweet_evaluation.txt"), tweets_evals)
     if(out_path is None):
         out_path = "./results"
     
@@ -112,15 +112,7 @@ def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
 
     evaluate_utility.write_tweets(out_path_evaluation,  words_evals)
 
-    # tweets_index = count_indexes(tweets_evals)
     words_index = count_indexes(words_evals)
     evaluate_utility.write_tweets(out_path_index,  words_evals)
-    # with open(out_path_correct_ratio, "wt", encoding="utf8", newline="") as out_file:
-    #     for correct_ratio in scores_perturbed_corrected_ratio:
-    #         out_file.write(correct_ratio)
     
     return words_index
-
-
-
-

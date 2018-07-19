@@ -19,10 +19,7 @@ def generate_model(input_dict, input_layout):
  
     resource_path = config['config']['resources']
     layout_file = resource_path + input_layout + '.json'
-    
-    #transition_out_file = library_path + 'model/transition/' +  input_dict + '.csv'
-    #emission_out_file = library_path + 'model/emission/' + input_dict + '.csv'
- 
+     
     print("Generating Transition Matrix...")
     transitionMatrix = transition_matrix.create_transition_matrix(input_dict)
  
@@ -36,21 +33,15 @@ def generate_model(input_dict, input_layout):
     obs, emissionMatrix = emission_matrix.generate_emission_matrix(layout_file)
     emission_dataframe = pd.DataFrame(emissionMatrix, index=obs, columns=obs)
  
-    # Print model elements
     start_prob = np.asmatrix(transition_dataframe.values[0])
-    #print("Start Probabilities: {}".format(start_prob))
  
     states =  list(transition_dataframe.index.values)
-    #print("States: {}".format(states))
  
     observation = list(transition_dataframe.index.values)
-    #print("Observation: {}".format(observation))
  
     transition = np.asmatrix(transition_dataframe.values)
-    #print("Transition: {}".format(transition))
  
     emission = np.asmatrix(emission_dataframe.values)
-    #print("Emission: {}".format(emission))
  
     #Generate the HMM model using Start prob, Transaction, States, Emissions and Observations
     model = hidden_markov.hmm(states,observation,start_prob,transition,emission)
@@ -137,7 +128,6 @@ def create_model(input_dict,input_layout,force_model_computing = False):
     
     # Build the dictionary name
     input_dict_name = "".join(input_dict)
-    # print("##################### " + input_dict_name)
     if not force_model_computing:
     # Check if the model already exists
         if io_model.check_model(input_dict_name):
