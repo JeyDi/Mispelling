@@ -1,6 +1,7 @@
 import csv
 import re
 import os.path as path
+import math
 
 
 mentions_re = re.compile(r'@[^\s]*')
@@ -41,3 +42,35 @@ def clean(tweet):
     tweet = tweet.strip()  # spaces at head or tail
 
     return tweet
+
+# Obtain a path to a file which contains the n percent of the input file's text
+# The output path is the input file + "_n_percent"
+def obtain_n_percent(path, percent):
+
+    with open (path, "r",encoding="utf-8") as file: 
+        words = file.readlines() 
+        file.close()
+
+    words = " ".join(words)
+    words = words.split(" ")
+
+    words_count = len(words)
+    words_to_obtain = math.ceil(words_count*(percent/100))
+    print("\n Numero di parole totali: " + str(words_count))
+    print(" Numero di parole ottenute: " + str(words_to_obtain) +"\n")
+    result = []
+
+    for index, word in enumerate(words):
+        if index > words_to_obtain:
+            break
+        result.append(word)
+    
+    result = " ".join(result)
+
+    path = path.split(".")[2]
+
+    with open ("../" + path + "_" + str(percent) + "_percent.txt", "w",encoding="utf-8") as file: 
+        file.write(result) 
+        file.close()
+
+    return "../" + path + "_" + str(percent) + "_percent.txt"

@@ -15,6 +15,10 @@ result_folder = config['twitter']['twitter_raw_tweets_folder']
 profiles = ["realDonaldTrump","rogerfederer","MercedesAMG", "Forbes"]
  
 tweets_downloader.downloadTweets(profiles,result_folder)
- 
+
+profiles.append("movie_lines")
+profiles.append("days")
+profiles.append("test")
+
 for profile in profiles:
     tweets_cleaner.preprocessing(profile) 

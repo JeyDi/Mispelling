@@ -1,6 +1,7 @@
 #------VISUAL STUDIO CODE-----
 .vscode/*
 .vscode/settings.json
+code/.vscode/settings.json
 .vscode/tasks.json
 .vscode/launch.json
 .vscode/extensions.json
@@ -114,3 +115,7 @@ venv.bak/
 # mypy
 .mypy_cache/
 \.idea/
+
+# Custom
+**/saved_models
+.vscode/settings.json

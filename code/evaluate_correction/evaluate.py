@@ -113,6 +113,6 @@ def evaluate(dict_file, perturbed_file, corrected_file,out_path = None):
     evaluate_utility.write_tweets(out_path_evaluation,  words_evals)
 
     words_index = count_indexes(words_evals)
-    evaluate_utility.write_tweets(out_path_index,  words_evals)
+    evaluate_utility.write_tweets(out_path_index,  words_index)
     
     return words_index
